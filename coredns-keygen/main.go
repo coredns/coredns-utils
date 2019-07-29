@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -9,7 +10,20 @@ import (
 	"github.com/miekg/dns"
 )
 
+var helpFlag = flag.Bool("h", false, "show short help message")
+
 func main() {
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage of %s [OPTIONS] ZONE [ZONE]...:\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Generate Common Signing Keys for DNSSEC.\n")
+		flag.PrintDefaults()
+	}
+
+	flag.Parse()
+	if *helpFlag || len(os.Args[1:]) == 0 {
+		flag.Usage()
+		return
+	}
 	for _, zone := range os.Args[1:] {
 		key := &dns.DNSKEY{
 			Hdr:       dns.RR_Header{Name: dns.Fqdn(zone), Class: dns.ClassINET, Ttl: 3600, Rrtype: dns.TypeDNSKEY},
