@@ -14,7 +14,7 @@ var helpFlag = flag.Bool("h", false, "show short help message")
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage of %s [OPTIONS] ZONE [ZONE]...:\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Usage of %s [OPTIONS] ZONE [ZONE]...\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "Generate Common Signing Keys for DNSSEC.\n")
 		flag.PrintDefaults()
 	}
@@ -34,10 +34,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		base := fmt.Sprintf("K%s+%03d.+%05d", key.Header().Name, key.Algorithm, key.KeyTag())
-		if key.Header().Name == "." {
-			base = fmt.Sprintf("K%s.+%03d.+%05d", key.Header().Name, key.Algorithm, key.KeyTag()) // have .. for the root zone
-		}
+		base := fmt.Sprintf("K%s+%03d+%05d", key.Header().Name, key.Algorithm, key.KeyTag())
 		if err := ioutil.WriteFile(base+".key", []byte(key.String()+"\n"), 0644); err != nil {
 			log.Fatal(err)
 		}

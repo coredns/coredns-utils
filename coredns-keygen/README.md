@@ -19,8 +19,8 @@ coredns-keygen ZONES...
 
 For each key pair the following files are created:
 
-* `K<zone>.+<algorithm>.+<keytag>.key` for the DNSKEY RR, and
-* `K<zone>.+<algorithm>.+<keytag>.private` for the private one.
+* `K<zone>.+<algorithm>+<keytag>.key` for the DNSKEY RR, and
+* `K<zone>.+<algorithm>+<keytag>.private` for the private one.
 
 For each generate key the base name of these file is printed to standard output once.
 
@@ -30,8 +30,8 @@ Generate keys for example.org and example.net:
 
 ~~~
 $ coredns-keygen example.org example.net
-Kexample.org.+013.+09787
-Kexample.net.+013.+00440
+Kexample.org.+013+09787
+Kexample.net.+013+00440
 ~~~
 
 ## Also See
