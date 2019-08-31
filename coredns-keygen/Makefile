@@ -2,8 +2,10 @@ ifeq (, $(shell which mmark))
     $(warning "No mmark in $$PATH, exiting, see github.com/mmarkdown/mmark")
 all:
 	@echo "noop"
+	go build
 else
 all: coredns-keygen.8
+	go build
 endif
 
 coredns-keygen.8: README.md

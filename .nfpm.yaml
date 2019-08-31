@@ -1,0 +1,17 @@
+name: "coredns-utils"
+arch: "amd64"
+platform: "linux"
+version: "v${MY_APP_VERSION}"
+section: "default"
+priority: "extra"
+provides:
+- coredns-utils
+maintainer: "Miek Gieben <miek@miek.nl>"
+description: |
+  Utilities useful with CoreDNS.
+homepage: "https://github.com/coredns/coredns-utils"
+license: "MIT"
+bindir: "/usr/sbin"
+files:
+  coredns-keygen/coredns-keygen: "/usr/sbin/coredns-keygen"
+  coredns-keygen/coredns-keygen.8: "/usr/share/man/man8/coredns-keygen.8"
