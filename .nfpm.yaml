@@ -10,7 +10,7 @@ maintainer: "Miek Gieben <miek@miek.nl>"
 description: |
   Utilities useful with CoreDNS.
 homepage: "https://github.com/coredns/coredns-utils"
-license: "MIT"
+license: "Apache-2.0"
 bindir: "/usr/sbin"
 files:
   coredns-keygen/coredns-keygen: "/usr/sbin/coredns-keygen"
