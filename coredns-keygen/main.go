@@ -34,11 +34,16 @@ func main() {
 			log.Fatal(err)
 		}
 
+		ds := key.ToDS(dns.SHA256)
+
 		base := fmt.Sprintf("K%s+%03d+%05d", key.Header().Name, key.Algorithm, key.KeyTag())
 		if err := ioutil.WriteFile(base+".key", []byte(key.String()+"\n"), 0644); err != nil {
 			log.Fatal(err)
 		}
 		if err := ioutil.WriteFile(base+".private", []byte(key.PrivateKeyString(priv)), 0600); err != nil {
+			log.Fatal(err)
+		}
+		if err := ioutil.WriteFile(base+".ds", []byte(ds.String()+"\n"), 0644); err != nil {
 			log.Fatal(err)
 		}
 		fmt.Println(base) // output keys generated to stdout to mimic dnssec-keygen

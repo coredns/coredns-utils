@@ -19,10 +19,11 @@ coredns-keygen ZONES...
 
 For each key pair the following files are created:
 
-* `K<zone>.+<algorithm>+<keytag>.key` for the DNSKEY RR, and
+* `K<zone>.+<algorithm>+<keytag>.key` for the DNSKEY RR,
+* `K<zone>.+<algorithm>+<keytag>.ds` for the DS RR, and,
 * `K<zone>.+<algorithm>+<keytag>.private` for the private one.
 
-For each generate key the base name of these file is printed to standard output once.
+For each generated key the base name of these file is printed to standard output once.
 
 ## Examples
 
@@ -36,5 +37,7 @@ Kexample.net.+013+00440
 
 ## Also See
 
-dnssec-keygen(8) can also used to generate keys and supports more options. See RFC 4033, 4034, 4035
-for the whole DNSSEC specification.
+dnssec-keygen(8) can also used to generate keys and supports more options. ldns-keygen(1) and
+ldns-key2ds(1) or similar utilities.
+
+See RFC 4033, 4034, 4035 for the DNSSEC specification.
