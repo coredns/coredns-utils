@@ -11,23 +11,30 @@ import (
 )
 
 var helpFlag = flag.Bool("h", false, "show short help message")
+var zskFlag = flag.Bool("zsk", false, "generate zone signing key (zsk)")
+var keyFlag uint16 = 257 // CSK/KSK
 
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage of %s [OPTIONS] ZONE [ZONE]...\n", os.Args[0])
-		fmt.Fprintf(os.Stderr, "Generate Common Signing Keys for DNSSEC.\n")
+		fmt.Fprintf(os.Stderr, "Generate Keys for DNSSEC (default is CSK/KSK).\n")
 		flag.PrintDefaults()
 	}
 
 	flag.Parse()
-	if *helpFlag || len(os.Args[1:]) == 0 {
+	if *helpFlag || len(flag.Args()) == 0 {
 		flag.Usage()
 		return
 	}
-	for _, zone := range os.Args[1:] {
+
+	if *zskFlag {
+		keyFlag = 256 // ZSK
+	}
+
+	for _, zone := range flag.Args() {
 		key := &dns.DNSKEY{
 			Hdr:       dns.RR_Header{Name: dns.Fqdn(zone), Class: dns.ClassINET, Ttl: 3600, Rrtype: dns.TypeDNSKEY},
-			Algorithm: dns.ECDSAP256SHA256, Flags: 257, Protocol: 3,
+			Algorithm: dns.ECDSAP256SHA256, Flags: keyFlag, Protocol: 3,
 		}
 		priv, err := key.Generate(256)
 		if err != nil {
