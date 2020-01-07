@@ -6,15 +6,17 @@
 
 ## Description
 
-*coredns-keygen* generates a Common Signing Key for the purpose of signing zones. It has no options
-and will generate a key with the ECDSAP256SHA256 algorithm (elliptic curve) and the KSK bit set.
+*coredns-keygen* generates keys for the purpose of signing DNS zones. It has the option to
+generate Zone Signing Key's (ZSK) however by default keys are generated with the KSK bit set.
+All keys are generated with the ECDSAP256SHA256 algorithm (elliptic curve).
 
 ## Syntax
 
-~~~
-coredns-keygen ZONES...
+~~~sh
+coredns-keygen [-zsk] ZONES...
 ~~~
 
+* **-zsk**  generate ZSK instead of CSK/KSK
 * **ZONES** zones it should generate keys for.
 
 For each key pair the following files are created:
@@ -27,12 +29,20 @@ For each generated key the base name of these file is printed to standard output
 
 ## Examples
 
-Generate keys for example.org and example.net:
+Generate CSK/KSK keys for example.org and example.net:
 
-~~~
+~~~sh
 $ coredns-keygen example.org example.net
 Kexample.org.+013+09787
 Kexample.net.+013+00440
+~~~
+
+Generate ZSK keys for example.org and example.net:
+
+~~~sh
+$ coredns-keygen -zsk example.org example.net
+Kexample.org.+013+00234
+Kexample.net.+013+08728
 ~~~
 
 ## Also See
